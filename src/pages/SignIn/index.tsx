@@ -8,12 +8,21 @@ import {
 import Card from '../../components/Card';
 
 import background from '../../assets/images/background-login.jpg';
-import logoInter from '../../assets/images/Inter-orange.png'
+import logoInter from '../../assets/images/Inter-orange.png';
+
 import Input from '../../components/Input';
 import Button from '../../components/Button';
-import { Link } from 'react-router-dom';
+
+import { Link, useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
+
+	const navigate = useNavigate();
+
+	const handleToSignIn = () => {
+		navigate('/dashboard');
+	}
+
 	return (
 		<Wrapper>
 			<Background image={background} />
@@ -32,7 +41,10 @@ const SignIn = () => {
 				</InputContainer>
 
 				<ButtonContainer>
-					<Button type='button'>
+					<Button 
+						type='button'
+						onClick={handleToSignIn}
+					>
 						Entrar
 					</Button>
 					<p>Ainda não é cadastrado? <Link to='/signup'>Cadastre-se já</Link></p>

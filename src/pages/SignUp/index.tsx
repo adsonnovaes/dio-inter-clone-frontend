@@ -1,11 +1,75 @@
-import React from 'react'
+import {
+	Wrapper,
+	Background,
+	InputContainer,
+	ButtonContainer
+} from './styles';
+
+import Card from '../../components/Card';
+
+import background from '../../assets/images/background-login.jpg';
+import logoInter from '../../assets/images/Inter-orange.png';
+
+import Input from '../../components/Input';
+import Button from '../../components/Button';
+
+import { Link, useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
-    return (
-        <div>
-            SignUp
-        </div>
-    )
+
+	const navigate = useNavigate();
+
+	const handleToSignUp = () => {
+		navigate('/dashboard');
+	}
+
+	return (
+		<Wrapper>
+			<Background image={background} />
+			<Card
+				width="403px"
+			>
+				<img src={logoInter} width={172} alt="logo inter" />
+				<InputContainer>
+					<Input
+						placeholder='Nome'
+					/>
+
+					<Input
+						placeholder='Sobrenome'
+						type='password'
+					/>
+
+					<Input
+						placeholder='Email'
+						type='password'
+					/>
+
+					<Input
+						placeholder='Senha'
+						type='password'
+					/>
+
+					<Input
+						placeholder='Confirmar Senha'
+						type='password'
+					/>
+				</InputContainer>
+
+				<ButtonContainer>
+					<Button
+						type='button'
+						onClick={handleToSignUp}
+					>
+						Entrar
+					</Button>
+					<p>Já tem uma conta? <Link to='/'>Entre já</Link></p>
+				</ButtonContainer>
+
+			</Card>
+			{/* SignIn */}
+		</Wrapper>
+	)
 }
 
-export default SignUp
+export default SignUp;
