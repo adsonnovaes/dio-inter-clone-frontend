@@ -1,9 +1,9 @@
 <p align="center">
-  <img alt="Dashboard" src=".github/dashboard.png" width="160px">
+  <img alt="Inter-dio" src=".github/Inter-orange.png" width="160px" />
 </p>
 
 <h1 align="center">
-    <img alt="Inter-dio" title="Inter-dio" src=".github/inter-orange.png" />
+    <img alt="Dashboard" title="Inter-dio" src=".github/dashboard.png">
 </h1>
  
 <br>
