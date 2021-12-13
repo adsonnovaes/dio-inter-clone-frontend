@@ -9,7 +9,8 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-      background-color: ${({ theme }) => theme.colors.background};
+    font-family: 'Roboto', sans-serif;
+    background-color: ${({ theme }) => theme.colors.background};
   }
 
   input, button, textarea, select {
@@ -23,6 +24,7 @@ const GlobalStyle = createGlobalStyle`
   a {
     text-decoration: none;
     color: ${({ theme }) => theme.colors.primary};
+    
     &:hover {
       filter: opacity(0.8)
     }
