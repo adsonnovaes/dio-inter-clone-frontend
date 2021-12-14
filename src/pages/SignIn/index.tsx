@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import {
 	Wrapper,
 	Background,
@@ -13,14 +15,30 @@ import logoInter from '../../assets/images/Inter-orange.png';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 
-import { Link, useNavigate } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
 
 const SignIn = () => {
 
-	const navigate = useNavigate();
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
 
-	const handleToSignIn = () => {
-		navigate('/dashboard');
+	const navigate = useNavigate();
+	const { userSignIn } = useAuth();
+
+	const handleToSignIn = async () => {
+
+		const data = {
+			email,
+			password
+		}
+
+		const response = await userSignIn(data);
+
+		if (response.id) {
+			navigate('/dashboard');
+		}
+
+		alert('Usuário ou senha invalida');
 	}
 
 	return (
@@ -33,15 +51,19 @@ const SignIn = () => {
 				<InputContainer>
 					<Input
 						placeholder='Email'
+						value={email}
+						onChange={event => setEmail(event.target.value)}
 					/>
 					<Input
 						placeholder='Senha'
 						type='password'
+						value={password}
+						onChange={event => setPassword(event.target.value)}
 					/>
 				</InputContainer>
 
 				<ButtonContainer>
-					<Button 
+					<Button
 						type='button'
 						onClick={handleToSignIn}
 					>
