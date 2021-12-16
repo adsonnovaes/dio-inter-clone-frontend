@@ -1,4 +1,6 @@
 import Button from "../../components/Button";
+import { useEffect, useState } from "react";
+
 import Card from "../../components/Card";
 import Header from "../../components/Header";
 import Input from "../../components/Input";
@@ -6,19 +8,49 @@ import Statement from "./Statement";
 
 import useAuth from '../../hooks/useAuth';
 
+import { pay, request } from '../../services/resources/pix';
+
 import {
   DashboardBackground,
   BodyContainer,
   InlineContainer,
   InlineTitle,
 } from "./styles";
-import { useEffect } from "react";
 
 const Dashboard = () => {
 
   const { user, getCurrentUser } = useAuth();
-
   const wallet = user?.wallet || 0;
+
+  const [key, setKey] = useState('');
+  const [generatedKey, setGeneratedKey] = useState('');
+  const [value, setValue] = useState('');
+
+  const handleNewPayment = async () => {
+    const { data } = await request(Number(value));
+
+    if (data.copyPasteKey) {
+      setGeneratedKey(data.copyPasteKey);
+    }
+  }
+
+  const handlePayPix = async () => {
+    try {
+      const { data } = await pay(key);
+
+      if (data.mag) {
+        alert(data.mag);
+        return;
+      }
+
+      alert('Não foi possível o pagamento')
+
+    } catch (e) {
+      console.log(e);
+      alert('Não é possível receber o Pix do mesmo usuário');
+    }
+  }
+
 
   useEffect(() => {
     getCurrentUser();
@@ -67,13 +99,19 @@ const Dashboard = () => {
             <InlineContainer>
               <Input
                 style={{ flex: 1 }}
+                value={value}
+                onChange={event => setValue(event.target.value)}
                 placeholder="Valor"
               />
-              <Button>Gerar Código</Button>
+              <Button onClick={handleNewPayment}>Gerar Código</Button>
             </InlineContainer>
 
-            <p className="primary-color" >Pix Copia e Cola</p>
-            <p className="primary-color" >ewdwefwefwergergegg wefqwg</p>
+            {generatedKey && (
+              <>
+                <p className="primary-color" >Pix Copia e Cola</p>
+                <p className="primary-color" >{generatedKey}</p>
+              </>
+            )}
 
           </Card>
 
@@ -90,9 +128,11 @@ const Dashboard = () => {
             <InlineContainer>
               <Input
                 style={{ flex: 1 }}
+                value={key}
+                onChange={event => setKey(event.target.value)}
                 placeholder="Insira a Chave"
               />
-              <Button>Pagar Pix</Button>
+              <Button onClick={handlePayPix}>Pagar Pix</Button>
             </InlineContainer>
 
           </Card>
