@@ -4,16 +4,29 @@ import Header from "../../components/Header";
 import Input from "../../components/Input";
 import Statement from "./Statement";
 
+import useAuth from '../../hooks/useAuth';
+
 import {
   DashboardBackground,
   BodyContainer,
   InlineContainer,
   InlineTitle,
 } from "./styles";
+import { useEffect } from "react";
 
 const Dashboard = () => {
 
-  const wallet = 5000;
+  const { user, getCurrentUser } = useAuth();
+
+  const wallet = user?.wallet || 0;
+
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <DashboardBackground>

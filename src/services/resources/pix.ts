@@ -11,5 +11,5 @@ export const pay = (key: string) => {
 }
 
 export const transactions = () => {
-  return api.get('/pix/transactions')
+  return api.get('/pix/transactions');
 }

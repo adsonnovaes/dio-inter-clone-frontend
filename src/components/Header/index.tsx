@@ -1,15 +1,19 @@
+import { useNavigate } from 'react-router-dom';
 import {
   HeaderContainer,
   HeaderWrapper,
   UserInfo
 } from './styles';
 
+import useAuth from '../../hooks/useAuth';
 import logoInter from '../../assets/images/Inter-orange.png';
-import { useNavigate } from 'react-router-dom';
 import UserCircle from '../UserCircle';
 
 const Header = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
+
+  const initials = user.firstName.substring(0,1) + user.lastName.substring(0,1);
 
   const handleLogoff = () => {
     navigate('/');
@@ -27,12 +31,13 @@ const Header = () => {
 
         <UserInfo>
           <UserCircle
-            initials="AN"
+            initials={initials.toLocaleUpperCase()}
           />
 
           <div>
-            <p>Olá. <span className="primary-color font-bold">Adson</span></p>
-            <strong>61263128313-2</strong>
+            <p>Olá. <span className="primary-color font-bold">{user.firstName} 
+             {user.lastName}</span></p>
+            <strong>{user.accountNumber}-{user.accountDigit}</strong>
             <br />
             <a href="#" onClick={handleLogoff} >Sair</a>
           </div>
